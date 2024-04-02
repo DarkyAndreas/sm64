@@ -94,6 +94,8 @@
 
 // silence
 #define NO_SOUND                    0
+#define MARIO_SILENCE				1
+#define PEACH_SILENCE				1
 
 /**
  * The table below defines all sounds that exist in the game, and which flags
@@ -181,8 +183,10 @@
 #define SOUND_MOVING_UNK1A                       /* 0x101A0000 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x1A, 0x00, 0) // ?, unused
 #define SOUND_MOVING_RIDING_SHELL_LAVA           /* 0x14280000 */ SOUND_ARG_LOAD(SOUND_BANK_MOVING,   0x28, 0x00, SOUND_NO_PRIORITY_LOSS)
 
+#if defined (MARIO_SILENCE) == 0
 /* Mario Sound Effects */
 // A random number 0-2 is added to the sound ID before playing, producing Yah/Wah/Hoo
+
 #define SOUND_MARIO_YAH_WAH_HOO                  /* 0x24008080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x00, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_MARIO_HOOHOO                       /* 0x24038080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x03, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
 #define SOUND_MARIO_YAHOO                        /* 0x24048080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x04, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
@@ -208,6 +212,7 @@
 #define SOUND_MARIO_PANTING_COLD                 /* 0x24168080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x16, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 
 // A random number 0-2 is added to the sound ID before playing
+
 #define SOUND_MARIO_PANTING                      /* 0x24188080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x18, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 
 #define SOUND_MARIO_COUGHING1                    /* 0x241B8080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x1B, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -220,9 +225,6 @@
 #define SOUND_MARIO_GROUND_POUND_WAH             /* 0x24228080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x22, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_MARIO_DROWNING                     /* 0x2423F080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x23, 0xF0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_MARIO_PUNCH_WAH                    /* 0x24248080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x24, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
-
-/* Mario Sound Effects (US/EU only) */
-#define SOUND_PEACH_DEAR_MARIO                   /* 0x2428FF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x28, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 
 // A random number 0-4 is added to the sound ID before playing, producing one of
 // Yahoo! (60% chance), Waha! (20%), or Yippee! (20%).
@@ -237,6 +239,76 @@
 #define SOUND_MARIO_SO_LONGA_BOWSER              /* 0x24368080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x36, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_MARIO_IMA_TIRED                    /* 0x24378080 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x37, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 
+#define SOUND_MENU_COIN_ITS_A_ME_MARIO           /* 0x70140080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x14, 0x00, SOUND_DISCRETE)
+#define SOUND_MENU_STAR_SOUND_OKEY_DOKEY         /* 0x7023FF80 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x23, 0xFF, SOUND_DISCRETE)
+#define SOUND_MENU_STAR_SOUND_LETS_A_GO          /* 0x7024FF80 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x24, 0xFF, SOUND_DISCRETE)
+
+#else
+/* Mario Sound Effects */
+// A random number 0-2 is added to the sound ID before playing, producing Yah/Wah/Hoo
+
+#define SOUND_MARIO_YAH_WAH_HOO                  /* 0x24008080 */ NO_SOUND
+#define SOUND_MARIO_HOOHOO                       /* 0x24038080 */ NO_SOUND
+#define SOUND_MARIO_YAHOO                        /* 0x24048080 */ NO_SOUND
+#define SOUND_MARIO_UH                           /* 0x24058080 */ NO_SOUND
+#define SOUND_MARIO_HRMM                         /* 0x24068080 */ NO_SOUND
+#define SOUND_MARIO_WAH2                         /* 0x24078080 */ NO_SOUND
+#define SOUND_MARIO_WHOA                         /* 0x2408C080 */ NO_SOUND
+#define SOUND_MARIO_EEUH                         /* 0x24098080 */ NO_SOUND
+#define SOUND_MARIO_ATTACKED                     /* 0x240AFF80 */ NO_SOUND
+#define SOUND_MARIO_OOOF                         /* 0x240B8080 */ NO_SOUND
+#define SOUND_MARIO_OOOF2                        /* 0x240BD080 */ NO_SOUND
+#define SOUND_MARIO_HERE_WE_GO                   /* 0x240C8080 */ NO_SOUND
+#define SOUND_MARIO_YAWNING                      /* 0x240D8080 */ NO_SOUND
+#define SOUND_MARIO_SNORING1                     /* 0x240E8080 */ NO_SOUND
+#define SOUND_MARIO_SNORING2                     /* 0x240F8080 */ NO_SOUND
+#define SOUND_MARIO_WAAAOOOW                     /* 0x2410C080 */ NO_SOUND
+#define SOUND_MARIO_HAHA                         /* 0x24118080 */ NO_SOUND
+#define SOUND_MARIO_HAHA_2                       /* 0x2411F080 */ NO_SOUND
+#define SOUND_MARIO_UH2                          /* 0x2413D080 */ NO_SOUND
+#define SOUND_MARIO_UH2_2                        /* 0x24138080 */ NO_SOUND
+#define SOUND_MARIO_ON_FIRE                      /* 0x2414A080 */ NO_SOUND
+#define SOUND_MARIO_DYING                        /* 0x2415FF80 */ NO_SOUND
+#define SOUND_MARIO_PANTING_COLD                 /* 0x24168080 */ NO_SOUND
+
+// A random number 0-2 is added to the sound ID before playing
+
+#define SOUND_MARIO_PANTING                      /* 0x24188080 */ NO_SOUND
+
+#define SOUND_MARIO_COUGHING1                    /* 0x241B8080 */ NO_SOUND
+#define SOUND_MARIO_COUGHING2                    /* 0x241C8080 */ NO_SOUND
+#define SOUND_MARIO_COUGHING3                    /* 0x241D8080 */ NO_SOUND
+#define SOUND_MARIO_PUNCH_YAH                    /* 0x241E8080 */ NO_SOUND
+#define SOUND_MARIO_PUNCH_HOO                    /* 0x241F8080 */ NO_SOUND
+#define SOUND_MARIO_MAMA_MIA                     /* 0x24208080 */ NO_SOUND
+#define SOUND_MARIO_OKEY_DOKEY                   /* 0x20210000 */ NO_SOUND
+#define SOUND_MARIO_GROUND_POUND_WAH             /* 0x24228080 */ NO_SOUND
+#define SOUND_MARIO_DROWNING                     /* 0x2423F080 */ NO_SOUND
+#define SOUND_MARIO_PUNCH_WAH                    /* 0x24248080 */ NO_SOUND
+
+// A random number 0-4 is added to the sound ID before playing, producing one of
+// Yahoo! (60% chance), Waha! (20%), or Yippee! (20%).
+#define SOUND_MARIO_YAHOO_WAHA_YIPPEE            /* 0x242B8080 */ NO_SOUND
+
+#define SOUND_MARIO_DOH                          /* 0x24308080 */ NO_SOUND
+#define SOUND_MARIO_GAME_OVER                    /* 0x2431FF80 */ NO_SOUND
+#define SOUND_MARIO_HELLO                        /* 0x2432FF80 */ NO_SOUND
+#define SOUND_MARIO_PRESS_START_TO_PLAY          /* 0x2433FFA0 */ NO_SOUND
+#define SOUND_MARIO_TWIRL_BOUNCE                 /* 0x24348080 */ NO_SOUND
+#define SOUND_MARIO_SNORING3                     /* 0x2435FF80 */ NO_SOUND
+#define SOUND_MARIO_SO_LONGA_BOWSER              /* 0x24368080 */ NO_SOUND
+#define SOUND_MARIO_IMA_TIRED                    /* 0x24378080 */ NO_SOUND
+
+#define SOUND_MENU_COIN_ITS_A_ME_MARIO           /* 0x70140080 */ NO_SOUND
+#define SOUND_MENU_STAR_SOUND_OKEY_DOKEY         /* 0x7023FF80 */ NO_SOUND
+#define SOUND_MENU_STAR_SOUND_LETS_A_GO          /* 0x7024FF80 */ NO_SOUND
+
+#endif
+
+#if defined (PEACH_NONSILENCE) == 0
+/* Mario Sound Effects (US/EU only) */
+#define SOUND_PEACH_DEAR_MARIO                   /* 0x2428FF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x28, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
 /* Princess Peach Sound Effects (US/EU only) */
 #define SOUND_PEACH_MARIO                        /* 0x2438FF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x38, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_PEACH_POWER_OF_THE_STARS           /* 0x2439FF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x39, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -246,6 +318,22 @@
 #define SOUND_PEACH_BAKE_A_CAKE                  /* 0x243DFF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3D, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_PEACH_FOR_MARIO                    /* 0x243EFF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3E, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_PEACH_MARIO2                       /* 0x243FFF80 */ SOUND_ARG_LOAD(SOUND_BANK_VOICE,    0x3F, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
+
+#else
+/* Mario Sound Effects (US/EU only) */
+#define SOUND_PEACH_DEAR_MARIO                   /* 0x2428FF80 */ NO_SOUND
+
+/* Princess Peach Sound Effects (US/EU only) */
+#define SOUND_PEACH_MARIO                        /* 0x2438FF80 */ NO_SOUND
+#define SOUND_PEACH_POWER_OF_THE_STARS           /* 0x2439FF80 */ NO_SOUND
+#define SOUND_PEACH_THANKS_TO_YOU                /* 0x243AFF80 */ NO_SOUND
+#define SOUND_PEACH_THANK_YOU_MARIO              /* 0x243BFF80 */ NO_SOUND
+#define SOUND_PEACH_SOMETHING_SPECIAL            /* 0x243CFF80 */ NO_SOUND
+#define SOUND_PEACH_BAKE_A_CAKE                  /* 0x243DFF80 */ NO_SOUND
+#define SOUND_PEACH_FOR_MARIO                    /* 0x243EFF80 */ NO_SOUND
+#define SOUND_PEACH_MARIO2                       /* 0x243FFF80 */ NO_SOUND
+
+#endif
 
 /* General Sound Effects */
 #define SOUND_GENERAL_ACTIVATE_CAP_SWITCH        /* 0x30008080 */ SOUND_ARG_LOAD(SOUND_BANK_GENERAL,  0x00, 0x80, SOUND_DISCRETE)
@@ -545,7 +633,6 @@
 #define SOUND_MENU_UNK10                         /* 0x70100000 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x10, 0x00, 0) // unverified, unused
 #define SOUND_MENU_CLICK_FILE_SELECT             /* 0x70110080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x11, 0x00, SOUND_DISCRETE)
 #define SOUND_MENU_MESSAGE_NEXT_PAGE             /* 0x70130080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x13, 0x00, SOUND_DISCRETE) // unverified
-#define SOUND_MENU_COIN_ITS_A_ME_MARIO           /* 0x70140080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x14, 0x00, SOUND_DISCRETE)
 #define SOUND_MENU_YOSHI_GAIN_LIVES              /* 0x70150080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x15, 0x00, SOUND_DISCRETE)
 #define SOUND_MENU_ENTER_PIPE                    /* 0x7016A080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x16, 0xA0, SOUND_DISCRETE)
 #define SOUND_MENU_EXIT_PIPE                     /* 0x7017A080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x17, 0xA0, SOUND_DISCRETE)
@@ -560,8 +647,7 @@
 #define SOUND_MENU_READ_A_SIGN                   /* 0x70200000 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x20, 0x00, 0) // unverified, unused
 #define SOUND_MENU_EXIT_A_SIGN                   /* 0x70210000 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x21, 0x00, 0) // unverified, unused
 #define SOUND_MENU_MARIO_CASTLE_WARP2            /* 0x70222080 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x22, 0x20, SOUND_DISCRETE) // unverified
-#define SOUND_MENU_STAR_SOUND_OKEY_DOKEY         /* 0x7023FF80 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x23, 0xFF, SOUND_DISCRETE)
-#define SOUND_MENU_STAR_SOUND_LETS_A_GO          /* 0x7024FF80 */ SOUND_ARG_LOAD(SOUND_BANK_MENU,     0x24, 0xFF, SOUND_DISCRETE)
+
 
 // US/EU only; an index between 0-7 or 0-4 is added to the sound ID before
 // playing, producing the same sound with different pitch.

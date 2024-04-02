@@ -166,7 +166,7 @@ static u8 textEraseFileButton[][16] = { {TEXT_ERASE_FILE}, {TEXT_ERASE_FILE_FR},
 #endif
 
 #ifndef VERSION_EU
-static u8 textSoundModes[][8] = { { TEXT_STEREO }, { TEXT_MONO }, { TEXT_HEADSET } };
+static u8 textSoundModes[][9] = { { TEXT_STEREO }, { TEXT_MONO }, { TEXT_HEADSET } };
 #endif
 
 static u8 textMarioA[] = { TEXT_FILE_MARIO_A };
@@ -1832,10 +1832,10 @@ void print_save_file_star_count(s8 fileIndex, s16 x, s16 y) {
     #define COPY_X 117
     #define ERASE_X 177
     #define SOUNDMODE_X1 sSoundTextX
-    #define SAVEFILE_X1 92
-    #define SAVEFILE_X2 209
-    #define MARIOTEXT_X1 92
-    #define MARIOTEXT_X2 207
+    #define SAVEFILE_X1 97
+    #define SAVEFILE_X2 204
+    #define MARIOTEXT_X1 97
+    #define MARIOTEXT_X2 204
     #define MARIOTEXT_Y1 65
     #define MARIOTEXT_Y2 105
 #elif defined(VERSION_EU)
@@ -2427,7 +2427,7 @@ void print_erase_menu_prompt(s16 x, s16 y) {
     #define ERASE_FILE_X     98
     #define ERASE_FILE_Y     35
     #define NOSAVE_DATA_X3   100
-    #define MARIO_ERASED_VAR 6
+    #define MARIO_ERASED_VAR 7
     #define MARIO_ERASED_X   100
     #define SAVE_EXISTS_X2   100
 #elif defined(VERSION_EU)
@@ -2870,11 +2870,11 @@ void print_score_file_star_score(s8 fileIndex, s16 courseIndex, s16 x, s16 y) {
 #else
     #define MARIO_X 25
     #define MARIO_Y 15
-    #define FILE_LETTER_X 95
+    #define FILE_LETTER_X 105
     #define LEVEL_NUM_PAD 3
     #define SECRET_STARS_PAD 6
     #define LEVEL_NAME_X 23
-    #define STAR_SCORE_X 171
+    #define STAR_SCORE_X 191
 #ifdef VERSION_EU
     #define MYSCORE_X get_str_x_pos_from_center(257, textMyScore[sLanguageMode], 10.0f)
     #define HISCORE_X get_str_x_pos_from_center(257, textHiScore[sLanguageMode], 10.0f)

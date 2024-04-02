@@ -31,6 +31,30 @@
 
 #define CBUTTON_MASK (U_CBUTTONS | D_CBUTTONS | L_CBUTTONS | R_CBUTTONS)
 
+extern u8 gInvertXAxis;
+extern u8 gParallelLakitu;
+u8 IR_CBUTTONS = R_CBUTTONS;
+u8 IL_CBUTTONS = L_CBUTTONS;
+
+int Inverter(s32 Button) {
+	if (Button == R_CBUTTONS && gInvertXAxis == 1) {
+	IR_CBUTTONS = R_CBUTTONS;
+	return IR_CBUTTONS;
+	}
+	if (Button == L_CBUTTONS && gInvertXAxis == 1) {
+	IL_CBUTTONS = L_CBUTTONS;
+	return IL_CBUTTONS;
+	}
+	if (Button == R_CBUTTONS && gInvertXAxis == 2) {
+	IR_CBUTTONS = L_CBUTTONS;
+	return IR_CBUTTONS;
+	}
+	if (Button == L_CBUTTONS && gInvertXAxis == 2) {
+	IL_CBUTTONS = R_CBUTTONS;
+	return IL_CBUTTONS;
+	}
+}
+
 /**
  * @file camera.c
  * Implements the camera system, including C-button input, camera modes, camera triggers, and cutscenes.
@@ -1166,9 +1190,70 @@ void mode_radial_camera(struct Camera *c) {
     pan_ahead_of_player(c);
 }
 
+s32 snap_to_45_degrees(s16 angle) {
+    if (angle % DEGREES(45)) {
+        s16 d1 = ABS(angle) % DEGREES(45);
+        s16 d2 = DEGREES(45) - d1;
+        if (angle > 0) {
+            if (d1 < d2) return angle - d1;
+            else return angle + d2;
+        } else {
+            if (d1 < d2) return angle + d1;
+            else return angle - d2;
+        }
+    }
+    return angle;
+}
+
 /**
  * A mode that only has 8 camera angles, 45 degrees apart
  */
+void mode_8_directions_camera_parallel(struct Camera *c) {
+    Vec3f pos;
+    UNUSED u8 filler[8];
+    s16 oldAreaYaw = sAreaYaw;
+
+    radial_camera_input(c, 0.f);
+
+    if (gPlayer1Controller->buttonPressed & Inverter(R_CBUTTONS)) {
+        s8DirModeYawOffset += DEGREES(45);
+        play_sound_cbutton_side();
+    }
+    if (gPlayer1Controller->buttonPressed & Inverter(L_CBUTTONS)) {
+        s8DirModeYawOffset -= DEGREES(45);
+        play_sound_cbutton_side();
+    }
+	
+	else if (gPlayer1Controller->buttonPressed & U_JPAD) {
+        s8DirModeYawOffset = 0;
+        s8DirModeYawOffset = gMarioState->faceAngle[1] - 0x8000;
+    }
+	//NONINVERTED
+    else if (gInvertXAxis == 1 && gPlayer1Controller->buttonDown & L_JPAD) {
+        s8DirModeYawOffset -= DEGREES(2);
+    }
+    else if (gInvertXAxis == 1 && gPlayer1Controller->buttonDown & R_JPAD) {
+        s8DirModeYawOffset += DEGREES(2);
+    }
+	//INVERTED
+	else if (gInvertXAxis == 2 && gPlayer1Controller->buttonDown & L_JPAD) {
+        s8DirModeYawOffset += DEGREES(2);
+    }
+    else if (gInvertXAxis == 2 && gPlayer1Controller->buttonDown & R_JPAD) {
+        s8DirModeYawOffset -= DEGREES(2);
+    }
+    else if (gPlayer1Controller->buttonPressed & D_JPAD) {
+        s8DirModeYawOffset = snap_to_45_degrees(s8DirModeYawOffset);
+    }
+
+    lakitu_zoom(400.f, 0x900);
+    c->nextYaw = update_8_directions_camera(c, c->focus, pos);
+    c->pos[0] = pos[0];
+    c->pos[2] = pos[2];
+    sAreaYawChange = sAreaYaw - oldAreaYaw;
+    set_camera_height(c, pos[1]);
+}
+
 void mode_8_directions_camera(struct Camera *c) {
     Vec3f pos;
     UNUSED u8 filler[8];
@@ -1176,11 +1261,11 @@ void mode_8_directions_camera(struct Camera *c) {
 
     radial_camera_input(c, 0.f);
 
-    if (gPlayer1Controller->buttonPressed & R_CBUTTONS) {
+    if (gPlayer1Controller->buttonPressed & Inverter(R_CBUTTONS)) {
         s8DirModeYawOffset += DEGREES(45);
         play_sound_cbutton_side();
     }
-    if (gPlayer1Controller->buttonPressed & L_CBUTTONS) {
+    if (gPlayer1Controller->buttonPressed & Inverter(L_CBUTTONS)) {
         s8DirModeYawOffset -= DEGREES(45);
         play_sound_cbutton_side();
     }
@@ -1192,6 +1277,7 @@ void mode_8_directions_camera(struct Camera *c) {
     sAreaYawChange = sAreaYaw - oldAreaYaw;
     set_camera_height(c, pos[1]);
 }
+
 
 /**
  * Updates the camera in outward radial mode.
@@ -1823,9 +1909,10 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
     // C-Button input. Note: Camera rotates in the opposite direction of the button (airplane controls)
     //! @bug C-Right and C-Up take precedence due to the way input is handled here
 
+	
     // Rotate right
-    if (sCButtonsPressed & L_CBUTTONS) {
-        if (gPlayer1Controller->buttonPressed & L_CBUTTONS) {
+    if (sCButtonsPressed & Inverter(L_CBUTTONS)) {
+        if (gPlayer1Controller->buttonPressed & Inverter(L_CBUTTONS)) {
             play_sound_cbutton_side();
         }
         if (dist < maxDist) {
@@ -1836,8 +1923,8 @@ s32 update_behind_mario_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
         yawSpeed = 2;
     }
     // Rotate left
-    if (sCButtonsPressed & R_CBUTTONS) {
-        if (gPlayer1Controller->buttonPressed & R_CBUTTONS) {
+    if (sCButtonsPressed & Inverter(R_CBUTTONS)) {
+        if (gPlayer1Controller->buttonPressed & Inverter(R_CBUTTONS)) {
             play_sound_cbutton_side();
         }
         if (dist < maxDist) {
@@ -2762,7 +2849,7 @@ s32 mode_c_up_camera(struct Camera *c) {
     sPanDistance = 0.f;
 
     // Exit C-Up mode
-    if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | D_CBUTTONS | L_CBUTTONS | R_CBUTTONS)) {
+    if (gPlayer1Controller->buttonPressed & (A_BUTTON | B_BUTTON | D_CBUTTONS | Inverter(L_CBUTTONS) | Inverter(R_CBUTTONS))) {
         exit_c_up(c);
     }
     return 0;
@@ -3098,64 +3185,125 @@ void update_camera(struct Camera *c) {
                     mode_mario_camera(c);
             }
         } else {
-            switch (c->mode) {
-                case CAMERA_MODE_BEHIND_MARIO:
-                    mode_behind_mario_camera(c);
-                    break;
+			if (gParallelLakitu == 1) {
+				switch (c->mode) {
+					case CAMERA_MODE_BEHIND_MARIO:
+						mode_behind_mario_camera(c);
+						break;
 
-                case CAMERA_MODE_C_UP:
-                    mode_c_up_camera(c);
-                    break;
+					case CAMERA_MODE_C_UP:
+						mode_c_up_camera(c);
+						break;
 
-                case CAMERA_MODE_WATER_SURFACE:
-                    mode_water_surface_camera(c);
-                    break;
+					case CAMERA_MODE_WATER_SURFACE:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_INSIDE_CANNON:
-                    mode_cannon_camera(c);
-                    break;
+					case CAMERA_MODE_INSIDE_CANNON:
+						mode_cannon_camera(c);
+						break;
 
-                case CAMERA_MODE_8_DIRECTIONS:
-                    mode_8_directions_camera(c);
-                    break;
+					case CAMERA_MODE_8_DIRECTIONS:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_RADIAL:
-                    mode_radial_camera(c);
-                    break;
+					case CAMERA_MODE_RADIAL:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_OUTWARD_RADIAL:
-                    mode_outward_radial_camera(c);
-                    break;
+					case CAMERA_MODE_OUTWARD_RADIAL:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_CLOSE:
-                    mode_lakitu_camera(c);
-                    break;
+					case CAMERA_MODE_CLOSE:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_FREE_ROAM:
-                    mode_lakitu_camera(c);
-                    break;
-                case CAMERA_MODE_BOSS_FIGHT:
-                    mode_boss_fight_camera(c);
-                    break;
+					case CAMERA_MODE_FREE_ROAM:
+						mode_8_directions_camera_parallel(c);
+						break;
+					case CAMERA_MODE_BOSS_FIGHT:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_PARALLEL_TRACKING:
-                    mode_parallel_tracking_camera(c);
-                    break;
+					case CAMERA_MODE_PARALLEL_TRACKING:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_SLIDE_HOOT:
-                    mode_slide_camera(c);
-                    break;
+					case CAMERA_MODE_SLIDE_HOOT:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_FIXED:
-                    mode_fixed_camera(c);
-                    break;
+					case CAMERA_MODE_FIXED:
+						mode_8_directions_camera_parallel(c);
+						break;
 
-                case CAMERA_MODE_SPIRAL_STAIRS:
-                    mode_spiral_stairs_camera(c);
-                    break;
-            }
-        }
-    }
+					case CAMERA_MODE_SPIRAL_STAIRS:
+						mode_8_directions_camera_parallel(c);
+						break;
+				}
+			}
+			else if (gParallelLakitu == 2) {
+				switch (c->mode) {
+					case CAMERA_MODE_BEHIND_MARIO:
+						mode_behind_mario_camera(c);
+						break;
+
+					case CAMERA_MODE_C_UP:
+						mode_c_up_camera(c);
+						break;
+
+					case CAMERA_MODE_WATER_SURFACE:
+						mode_water_surface_camera(c);
+						break;
+
+					case CAMERA_MODE_INSIDE_CANNON:
+						mode_cannon_camera(c);
+						break;
+
+					case CAMERA_MODE_8_DIRECTIONS:
+						mode_8_directions_camera(c);
+						break;
+
+					case CAMERA_MODE_RADIAL:
+						mode_radial_camera(c);
+						break;
+
+					case CAMERA_MODE_OUTWARD_RADIAL:
+						mode_outward_radial_camera(c);
+						break;
+
+					case CAMERA_MODE_CLOSE:
+						mode_lakitu_camera(c);
+						break;
+
+					case CAMERA_MODE_FREE_ROAM:
+						mode_lakitu_camera(c);
+						break;
+
+					case CAMERA_MODE_BOSS_FIGHT:
+						mode_boss_fight_camera(c);
+						break;
+
+					case CAMERA_MODE_PARALLEL_TRACKING:
+						mode_parallel_tracking_camera(c);
+						break;
+
+					case CAMERA_MODE_SLIDE_HOOT:
+						mode_slide_camera(c);
+						break;
+
+					case CAMERA_MODE_FIXED:
+						mode_fixed_camera(c);
+						break;
+
+					case CAMERA_MODE_SPIRAL_STAIRS:
+						mode_spiral_stairs_camera(c);
+						break;
+				}
+			}
+		}
+	}
     // Start any Mario-related cutscenes
     start_cutscene(c, get_cutscene_from_mario_status(c));
     stub_camera_2(c);
@@ -3856,20 +4004,20 @@ s32 find_c_buttons_pressed(u16 currentState, u16 buttonsPressed, u16 buttonsDown
     buttonsPressed &= CBUTTON_MASK;
     buttonsDown &= CBUTTON_MASK;
 
-    if (buttonsPressed & L_CBUTTONS) {
-        currentState |= L_CBUTTONS;
-        currentState &= ~R_CBUTTONS;
+    if (buttonsPressed & Inverter(L_CBUTTONS)) {
+        currentState |= Inverter(L_CBUTTONS);
+        currentState &= ~Inverter(R_CBUTTONS);
     }
-    if (!(buttonsDown & L_CBUTTONS)) {
-        currentState &= ~L_CBUTTONS;
+    if (!(buttonsDown & Inverter(L_CBUTTONS))) {
+        currentState &= ~Inverter(L_CBUTTONS);
     }
 
-    if (buttonsPressed & R_CBUTTONS) {
-        currentState |= R_CBUTTONS;
-        currentState &= ~L_CBUTTONS;
+    if (buttonsPressed & Inverter(R_CBUTTONS)) {
+        currentState |= Inverter(R_CBUTTONS);
+        currentState &= ~Inverter(L_CBUTTONS);
     }
-    if (!(buttonsDown & R_CBUTTONS)) {
-        currentState &= ~R_CBUTTONS;
+    if (!(buttonsDown & Inverter(R_CBUTTONS))) {
+        currentState &= ~Inverter(R_CBUTTONS);
     }
 
     if (buttonsPressed & U_CBUTTONS) {
@@ -4816,8 +4964,8 @@ void play_camera_buzz_if_cbutton(void) {
 }
 
 void play_camera_buzz_if_c_sideways(void) {
-    if ((gPlayer1Controller->buttonPressed & L_CBUTTONS)
-        || (gPlayer1Controller->buttonPressed & R_CBUTTONS)) {
+    if ((gPlayer1Controller->buttonPressed & Inverter(L_CBUTTONS))
+        || (gPlayer1Controller->buttonPressed & Inverter(R_CBUTTONS))) {
         play_sound_button_change_blocked();
     }
 }
@@ -4864,7 +5012,7 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
     if ((gCameraMovementFlags & CAM_MOVE_ENTERED_ROTATE_SURFACE) || !(gCameraMovementFlags & CAM_MOVE_ROTATE)) {
 
         // If C-L or C-R are pressed, the camera is rotating
-        if (gPlayer1Controller->buttonPressed & (L_CBUTTONS | R_CBUTTONS)) {
+        if (gPlayer1Controller->buttonPressed & (Inverter(L_CBUTTONS) | Inverter(R_CBUTTONS))) {
             gCameraMovementFlags &= ~CAM_MOVE_ENTERED_ROTATE_SURFACE;
             //  @bug this does not clear the rotation flags set by the surface. It's possible to set
             //       both ROTATE_LEFT and ROTATE_RIGHT, locking the camera.
@@ -4873,7 +5021,7 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
         }
 
         // Rotate Right and left
-        if (gPlayer1Controller->buttonPressed & R_CBUTTONS) {
+        if (gPlayer1Controller->buttonPressed & Inverter(R_CBUTTONS)) {
             if (sModeOffsetYaw > -0x800) {
                 // The camera is now rotating right
                 if (!(gCameraMovementFlags & CAM_MOVE_ROTATE_RIGHT)) {
@@ -4903,7 +5051,7 @@ s32 radial_camera_input(struct Camera *c, UNUSED f32 unused) {
                 play_sound_cbutton_up();
             }
         }
-        if (gPlayer1Controller->buttonPressed & L_CBUTTONS) {
+        if (gPlayer1Controller->buttonPressed & Inverter(L_CBUTTONS)) {
             if (sModeOffsetYaw < 0x800) {
                 if (!(gCameraMovementFlags & CAM_MOVE_ROTATE_LEFT)) {
                     gCameraMovementFlags |= CAM_MOVE_ROTATE_LEFT;
@@ -5014,7 +5162,7 @@ void handle_c_button_movement(struct Camera *c) {
 
         // Rotate left or right
         cSideYaw = 0x1000;
-        if (gPlayer1Controller->buttonPressed & R_CBUTTONS) {
+        if (gPlayer1Controller->buttonPressed & Inverter(R_CBUTTONS)) {
             if (gCameraMovementFlags & CAM_MOVE_ROTATE_LEFT) {
                 gCameraMovementFlags &= ~CAM_MOVE_ROTATE_LEFT;
             } else {
@@ -5025,7 +5173,7 @@ void handle_c_button_movement(struct Camera *c) {
                 sCSideButtonYaw = -cSideYaw;
             }
         }
-        if (gPlayer1Controller->buttonPressed & L_CBUTTONS) {
+        if (gPlayer1Controller->buttonPressed & Inverter(L_CBUTTONS)) {
             if (gCameraMovementFlags & CAM_MOVE_ROTATE_RIGHT) {
                 gCameraMovementFlags &= ~CAM_MOVE_ROTATE_RIGHT;
             } else {

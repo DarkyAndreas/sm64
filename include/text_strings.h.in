@@ -149,17 +149,17 @@
  */
 
 // Main Screens
-#define TEXT_MARIO _("MARIO") // View Score Menu
+#define TEXT_MARIO _("GOBBLE") // View Score Menu
 #define TEXT_SELECT_FILE _("SELECT FILE")
 #define TEXT_CHECK_FILE _("CHECK FILE")
 #define TEXT_COPY_FILE _("COPY FILE")
 #define TEXT_ERASE_FILE _("ERASE FILE")
 #define TEXT_SOUND_SELECT _("SOUND SELECT")
 
-#define TEXT_FILE_MARIO_A _("MARIO A")
-#define TEXT_FILE_MARIO_B _("MARIO B")
-#define TEXT_FILE_MARIO_C _("MARIO C")
-#define TEXT_FILE_MARIO_D _("MARIO D")
+#define TEXT_FILE_MARIO_A _("GOBBLE A")
+#define TEXT_FILE_MARIO_B _("GOBBLE B")
+#define TEXT_FILE_MARIO_C _("GOBBLE C")
+#define TEXT_FILE_MARIO_D _("GOBBLE D")
 
 // Menu Options
 #define TEXT_SCORE _("SCORE")
@@ -199,7 +199,7 @@
 #define TEXT_SURE _("SURE?")
 #define TEXT_YES _("YES")
 #define TEXT_NO _("NO")
-#define TEXT_FILE_MARIO_A_JUST_ERASED _("MARIO A JUST ERASED")
+#define TEXT_FILE_MARIO_A_JUST_ERASED _("GOBBLE A JUST ERASED")
 
 /**
  * Menus Text (Pause, Course Completed)
@@ -214,10 +214,14 @@
 #endif
 
 // Camera Options
-#define TEXT_LAKITU_MARIO _("LAKITU + MARIO")
-#define TEXT_LAKITU_STOP _("LAKITU + STOP")
+#define TEXT_LAKITU_MARIO _("CAMERA MODE: LAKITU + GOBBLE")
+#define TEXT_LAKITU_STOP _("CAMERA MODE: LAKITU + STOP")
 #define TEXT_NORMAL_UPCLOSE __("(NORMAL)(UP-CLOSE)")
 #define TEXT_NORMAL_FIXED __("(NORMAL)(FIXED)")
+#define TEXT_CAMERA_NONINVERTED _("X-AXIS: NON-INVERTED")
+#define TEXT_CAMERA_INVERTED _("X-AXIS: INVERTED")
+#define PARALLEL_LAKITU_ON _("PARALLEL LAKITU: ON")
+#define PARALLEL_LAKITU_OFF _("PARALLEL LAKITU: OFF")
 
 // Course Completed Misc Text
 #define TEXT_CATCH _("CATCH")
@@ -232,15 +236,15 @@
 /**
  * Ending Peach cutscene text.
  */
-#define TEXT_FILE_MARIO_EXCLAMATION _("Mario!")
-#define TEXT_POWER_STARS_RESTORED __("The power of the Stars is restored to the castle...")
-#define TEXT_THANKS_TO_YOU __("...and it's all thanks to you!")
-#define TEXT_THANK_YOU_MARIO __("Thank you, Mario!")
-#define TEXT_SOMETHING_SPECIAL __("We have to do something special for you...")
+#define TEXT_FILE_MARIO_EXCLAMATION _("Gobble?!")
+#define TEXT_POWER_STARS_RESTORED _("W- Why is the castle overflowing with star power?")
+#define TEXT_THANKS_TO_YOU _("and why are you here?! You want a reward?!")
+#define TEXT_THANK_YOU_MARIO _("Well I suppose you've rescued me and my servants...")
+#define TEXT_SOMETHING_SPECIAL ("Ugh! Fine, here you go...")
 #define TEXT_LISTEN_EVERYBODY _("Listen, everybody,")
-#define TEXT_LETS_HAVE_CAKE _("let's bake a delicious cake...")
-#define TEXT_FOR_MARIO _("...for Mario...")
-#define TEXT_FILE_MARIO_QUESTION _("Mario!")
+#define TEXT_LETS_HAVE_CAKE _("Gobble demanded a delicious cake...")
+#define TEXT_FOR_MARIO _("Get going already and prepare everything")
+#define TEXT_FILE_MARIO_QUESTION _("Gobble!") 
 
 #endif
 
@@ -410,7 +414,7 @@
 /**
  * Course Table names for Score Menu Save view
  */
-#define TEXT_MENU_BOB _(" 1 BOB-OMB BATTLEFIELD")
+#define TEXT_MENU_BOB _(" 1 BOB-OMB BIELEFELD")
 #define TEXT_MENU_WF _(" 2 WHOMP'S FORTRESS")
 #define TEXT_MENU_JRB _(" 3 JOLLY ROGER BAY")
 #define TEXT_MENU_CCM _(" 4 COOL, COOL MOUNTAIN")

@@ -1993,7 +1993,7 @@ s32 mario_execute_moving_action(struct MarioState *m) {
         case ACT_BRAKING:                  cancel = act_braking(m);                  break;
         case ACT_RIDING_SHELL_GROUND:      cancel = act_riding_shell_ground(m);      break;
         case ACT_CRAWLING:                 cancel = act_crawling(m);                 break;
-        case ACT_BURNING_GROUND:           cancel = act_burning_ground(m);           break;
+        //case ACT_BURNING_GROUND:           cancel = act_burning_ground(m);           break;
         case ACT_DECELERATING:             cancel = act_decelerating(m);             break;
         case ACT_HOLD_DECELERATING:        cancel = act_hold_decelerating(m);        break;
         case ACT_BUTT_SLIDE:               cancel = act_butt_slide(m);               break;

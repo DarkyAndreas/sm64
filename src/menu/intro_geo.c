@@ -82,7 +82,7 @@ Gfx *geo_intro_super_mario_64_logo(s32 state, struct GraphNode *node, UNUSED voi
         guScale(scaleMat, scaleX, scaleY, scaleZ);
 
         gSPMatrix(dlIter++, scaleMat, G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
-        gSPDisplayList(dlIter++, &intro_seg7_dl_logo);  // draw model
+        gSPDisplayList(dlIter++, &logo_Logo_mesh);  // draw model
         gSPPopMatrix(dlIter++, G_MTX_MODELVIEW);
         gSPEndDisplayList(dlIter);
 
@@ -94,7 +94,7 @@ Gfx *geo_intro_super_mario_64_logo(s32 state, struct GraphNode *node, UNUSED voi
 /**
  * Geo callback to render TM and Copyright on the title screen
  */
-Gfx *geo_intro_tm_copyright(s32 state, struct GraphNode *node, UNUSED void *context) {
+/*Gfx *geo_intro_tm_copyright(s32 state, struct GraphNode *node, UNUSED void *context) {
     struct GraphNode *graphNode = node;
     Gfx *dl = NULL;
     Gfx *dlIter = NULL;
@@ -128,7 +128,7 @@ Gfx *geo_intro_tm_copyright(s32 state, struct GraphNode *node, UNUSED void *cont
         }
     }
     return dl;
-}
+}*/
 
 /**
  * Generates a display list for a single background tile

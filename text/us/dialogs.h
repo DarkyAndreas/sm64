@@ -76,7 +76,7 @@ You can talk to us\n\
 whenever you'd like to!"))
 
 DEFINE_DIALOG(DIALOG_003, 1, 5, 95, 200, _("\
-Thank you, Mario! The Big\n\
+Thank you, Gobble! The Big\n\
 Bob-omb is nothing but a\n\
 big dud now! But the\n\
 battle for the castle has\n\
@@ -103,7 +103,7 @@ cannons in this course for\n\
 you to use. Bon Voyage!"))
 
 DEFINE_DIALOG(DIALOG_005, 1, 3, 30, 200, _("\
-Hey, Mario! Is it true\n\
+Hey, Gobble! Is it true\n\
 that you beat the Big\n\
 Bob-omb? Cool!\n\
 You must be strong. And\n\
@@ -185,7 +185,7 @@ DEFINE_DIALOG(DIALOG_011, 1, 4, 30, 200, _("\
 You've just stepped on\n\
 the Metal Cap Switch!\n\
 The Metal Cap makes\n\
-Mario invincible.\n\
+Gobble invincible.\n\
 Now Metal Caps will\n\
 pop out of all of the\n\
 green blocks you find.\n\
@@ -198,7 +198,7 @@ DEFINE_DIALOG(DIALOG_012, 1, 4, 30, 200, _("\
 You've just stepped on\n\
 the Vanish Cap Switch.\n\
 The Vanish Cap makes\n\
-Mario disappear.\n\
+Gobble disappear.\n\
 Now Vanish Caps will pop\n\
 from all of the blue\n\
 blocks you find.\n\
@@ -209,14 +209,14 @@ Would you like to Save?\n\
 
 DEFINE_DIALOG(DIALOG_013, 1, 5, 30, 200, _("\
 You've collected 100\n\
-coins! Mario gains more\n\
+coins! Gobble gains more\n\
 power from the castle.\n\
 Do you want to Save?\n\
 //Yes////No"))
 
 DEFINE_DIALOG(DIALOG_014, 1, 4, 30, 200, _("\
 Wow! Another Power Star!\n\
-Mario gains more courage\n\
+Gobble gains more courage\n\
 from the power of the\n\
 castle.\n\
 Do you want to Save?\n\
@@ -254,7 +254,7 @@ escape my grasp...\n\
 ...and you'll never take\n\
 away my Power Star. I\n\
 hereby challenge you,\n\
-Mario!\n\
+Gobble!\n\
 If you want the Star I\n\
 hold, you must prove\n\
 yourself in battle.\n\
@@ -275,10 +275,12 @@ Shhh! Please walk\n\
 quietly in the hallway!"))
 
 DEFINE_DIALOG(DIALOG_020, 1, 6, 95, 150, _("\
-Dear Mario:\n\
-Please come to the\n\
-castle. I've baked\n\
-a cake for you.\n\
+Dear Gobble:\n\
+You are NOT invited\n\
+to my tea party! Please\n\
+don't come to the\n\
+castle! You filthy dragon\n\
+already had enough cake!\n\
 Yours truly--\n\
 Princess Toadstool"))
 
@@ -339,7 +341,7 @@ Bwa ha ha!"))
 DEFINE_DIALOG(DIALOG_030, 1, 6, 30, 200, _("\
 Hello! The Lakitu Bros.,\n\
 cutting in with a live\n\
-update on Mario's\n\
+update on Gobble's\n\
 progress. He's about to\n\
 learn a technique for\n\
 sneaking up on enemies.\n\
@@ -370,7 +372,7 @@ Mach 1 Sprint shoes!\n\
 Here, I guess I have to\n\
 hand over this Star to\n\
 the winner of the race.\n\
-Congrats, Mario!"))
+Congrats, Gobble!"))
 
 DEFINE_DIALOG(DIALOG_032, 1, 5, 30, 200, _("\
 If you get the Wing Cap,\n\
@@ -397,7 +399,7 @@ jump and [B] to attack.\n\
 Press [B] to read signs,\n\
 too. Use the Control Stick\n\
 in the center of the\n\
-controller to move Mario\n\
+controller to move Gobble\n\
 around. Now, head for\n\
 the castle."))
 
@@ -408,7 +410,7 @@ reporting live from just\n\
 outside the Princess's\n\
 castle.\n\
 \n\
-Mario has just arrived\n\
+Gobble has just arrived\n\
 on the scene, and we'll\n\
 be filming the action live\n\
 as he enters the castle\n\
@@ -442,7 +444,7 @@ There are four camera, or\n\
 to look around using the\n\
 Control Stick.\n\
 \n\
-You'll usually see Mario\n\
+You'll usually see Gobble\n\
 through Lakitu's camera.\n\
 It is the camera\n\
 recommended for normal\n\
@@ -450,13 +452,13 @@ play.\n\
 You can change angles by\n\
 pressing [C]▶. If you press\n\
 [R], the view switches to\n\
-Mario's camera, which\n\
+Gobble's camera, which\n\
 is directly behind him.\n\
 Press [R] again to return\n\
 to Lakitu's camera. Press\n\
-[C]▼ to see Mario from\n\
+[C]▼ to see Gobble from\n\
 afar, using either\n\
-Lakitu's or Mario's view."))
+Lakitu's or Gobble's view."))
 
 DEFINE_DIALOG(DIALOG_036, 1, 5, 30, 200, _("\
 OBSERVATION PLATFORM\n\
@@ -465,8 +467,8 @@ around. Don't miss\n\
 anything!\n\
 \n\
 Press [R] to switch to\n\
-Mario's camera. It\n\
-always follows Mario.\n\
+Gobble's camera. It\n\
+always follows Gobble.\n\
 Press [R] again to switch\n\
 to Lakitu's camera.\n\
 Pause the game and\n\
@@ -534,7 +536,7 @@ edge if you move slowly.\n\
 When you want to let go,\n\
 either press [Z] or press\n\
 the Control Stick in the\n\
-direction of Mario's back.\n\
+direction of Gobble's back.\n\
 To climb up, press Up on\n\
 the Control Stick. To\n\
 scurry up quickly, press\n\
@@ -567,7 +569,7 @@ grab on."))
 DEFINE_DIALOG(DIALOG_045, 1, 6, 95, 200, _("\
 Whew! I'm just about\n\
 flapped out. You should\n\
-lay off the pasta, Mario!\n\
+lay off the cake, Gobble!\n\
 That's it for now. Press\n\
 [A] to let go. Okay,\n\
 bye byyyyyyeeee!"))
@@ -683,7 +685,7 @@ Control Stick. To slow\n\
 down, pull back."))
 
 DEFINE_DIALOG(DIALOG_055, 1, 4, 30, 200, _("\
-Hey-ey, Mario, buddy,\n\
+Hey-ey, Gobble, buddy,\n\
 howzit goin'? Step right\n\
 up. You look like a fast\n\
 sleddin' kind of guy.\n\
@@ -726,7 +728,7 @@ DEFINE_DIALOG(DIALOG_058, 1, 4, 30, 200, _("\
 You found my precious,\n\
 precious baby! Where\n\
 have you been? How can\n\
-I ever thank you, Mario?\n\
+I ever thank you, Gobble?\n\
 Oh, I do have this...\n\
 ...Star. Here, take it\n\
 with my eternal\n\
@@ -804,7 +806,7 @@ red block, do the Triple\n\
 Jump to soar high into\n\
 the sky.\n\
 Use the Control Stick to\n\
-guide Mario. Pull back to\n\
+guide Gobble. Pull back to\n\
 to fly up, press forward\n\
 to nose down, and press [Z]\n\
 to land."))
@@ -829,7 +831,7 @@ Easy as pie, right?\n\
 \n\
 \n\
 But remember:\n\
-Mario can't breathe under\n\
+Gobble can't breathe under\n\
 the water! Return to the\n\
 surface for air when the\n\
 Power Meter runs low.\n\
@@ -839,7 +841,7 @@ can't open doors that\n\
 are underwater."))
 
 DEFINE_DIALOG(DIALOG_066, 1, 5, 30, 200, _("\
-Mario, it's Peach!\n\
+Gobble, it's Peach!\n\
 Please be careful! Bowser\n\
 is so wicked! He will try\n\
 to burn you with his\n\
@@ -855,17 +857,17 @@ The faster you swing him,\n\
 the farther he'll fly.\n\
 \n\
 Use the [C] Buttons to look\n\
-around, Mario. You have\n\
+around, Gobble. You have\n\
 to throw Bowser into one\n\
 of the bombs in the four\n\
 corners.\n\
 Aim well, then press [B]\n\
 again to launch Bowser.\n\
-Good luck, Mario! Our\n\
+Good luck, Gobble! Our\n\
 fate is in your hands."))
 
 DEFINE_DIALOG(DIALOG_067, 1, 5, 30, 200, _("\
-Tough luck, Mario!\n\
+Tough luck, Gobble!\n\
 Princess Toadstool isn't\n\
 here...Gwa ha ha!! Go\n\
 ahead--just try to grab\n\
@@ -877,13 +879,10 @@ out of here! Never! Ha!"))
 
 DEFINE_DIALOG(DIALOG_068, 1, 5, 30, 200, _("\
 It's Lethal Lava Land!\n\
-If you catch fire or fall\n\
-into a pool of flames,\n\
-you'll be hopping mad, but\n\
-don't lose your cool.\n\
-You can still control\n\
-Mario--just try to keep\n\
-calm!"))
+But you're in luck, Gobble\n\
+the friendly dragon, is\n\
+immune to the hot stuff.\n\
+Try it out, have some fun!"))
 
 DEFINE_DIALOG(DIALOG_069, 1, 6, 30, 200, _("\
 Sometimes you'll bump into\n\
@@ -968,7 +967,7 @@ hang down from it.\n\
 To drop from the edge,\n\
 either press the Control\n\
 Stick in the direction of\n\
-Mario's back or press the\n\
+Gobble's back or press the\n\
 [Z] Button.\n\
 To get up onto the ledge,\n\
 either press Up on the\n\
@@ -977,42 +976,22 @@ as soon as you grab the\n\
 ledge to climb up quickly."))
 
 DEFINE_DIALOG(DIALOG_075, 1, 5, 30, 200, _("\
-Mario!! My castle is in\n\
-great peril. I know that\n\
-Bowser is the cause...and\n\
-I know that only you can\n\
-stop him!\n\
-The doors in the castle\n\
-that have been sealed by\n\
-Bowser can be opened only\n\
-with Star Power.\n\
-\n\
-But there are secret\n\
-paths in the castle,\n\
-paths that Bowser hasn't\n\
-found.\n\
-\n\
-One of those paths is in\n\
-this room, and it holds\n\
-one of the castle's Secret\n\
-Stars!\n\
-\n\
-Find that Secret Star,\n\
-Mario! It will help you\n\
-on your quest. Please,\n\
-Mario, you have to\n\
-help us!\n\
-Retrieve all of the\n\
-Power Stars in the castle\n\
-and free us from this\n\
-awful prison!\n\
-Please!"))
+Notice to all servants!\n\
+If you have been assigned\n\
+to clean the toilet, you\n\
+will find it to the right.\n\
+Whatever you do, don't\n\
+enter the painting to\n\
+the left!\n\
+Also if you see any filthy\n\
+dragons...\n\
+GO AND KICK THEM OUT!"))
 
 DEFINE_DIALOG(DIALOG_076, 1, 6, 30, 200, _("\
 Thanks to the power of\n\
 the Stars, life is\n\
 returning to the castle.\n\
-Please, Mario, you have\n\
+Please, Gobble, you have\n\
 to give Bowser the boot!\n\
 \n\
 Here, let me tell you a\n\
@@ -1080,7 +1059,7 @@ Oh, boy, it's not looking\n\
 good for Peach. She's\n\
 still trapped somewhere\n\
 inside the walls.\n\
-Please, Mario, you have\n\
+Please, Gobble, you have\n\
 to help her! Did you know\n\
 that there are enemy\n\
 worlds inside the walls?\n\
@@ -1095,7 +1074,7 @@ about that clock. As you\n\
 jump inside, watch the\n\
 position of the big hand.\n\
 Oh, look what I found!\n\
-Here, Mario, catch!"))
+Here, Gobble, catch!"))
 
 DEFINE_DIALOG(DIALOG_084, 1, 3, 30, 200, _("\
 Yeeoww! Unhand me,\n\
@@ -1167,7 +1146,7 @@ comfy ride."))
 
 DEFINE_DIALOG(DIALOG_092, 1, 5, 30, 200, _("\
 Pestering me again, are\n\
-you, Mario? Can't you see\n\
+you, Gobble? Can't you see\n\
 that I'm having a merry\n\
 little time, making\n\
 mischief with my minions?\n\
@@ -1176,7 +1155,7 @@ My troops in the walls\n\
 need them! Bwa ha ha!"))
 
 DEFINE_DIALOG(DIALOG_093, 1, 5, 30, 200, _("\
-Mario! You again! Well\n\
+Gobble! You again! Well\n\
 that's just fine--I've\n\
 been looking for something\n\
 to fry with my fire\n\
@@ -1399,7 +1378,7 @@ Bowser by the tail.\n\
 Methinks my troops could\n\
 learn a lesson from you!\n\
 Here is your Star, as I\n\
-promised, Mario.\n\
+promised, Gobble.\n\
 \n\
 If you want to see me\n\
 again, select this Star\n\
@@ -1461,7 +1440,7 @@ Gwa ha ha ha!"))
 DEFINE_DIALOG(DIALOG_121, 1, 5, 30, 200, _("\
 Nooo! It can't be!\n\
 You've really beaten me,\n\
-Mario?!! I gave those\n\
+Gobble?!! I gave those\n\
 troops power, but now\n\
 it's fading away!\n\
 Arrgghh! I can see peace\n\
@@ -1565,7 +1544,7 @@ just as you would when\n\
 flying an airplane."))
 
 DEFINE_DIALOG(DIALOG_132, 1, 4, 30, 200, _("\
-Whoa, Mario, pal, you\n\
+Whoa, Gobble, pal, you\n\
 aren't trying to cheat,\n\
 are you? Shortcuts aren't\n\
 allowed.\n\
@@ -1647,7 +1626,7 @@ from them."))
 DEFINE_DIALOG(DIALOG_136, 1, 6, 30, 200, _("\
 Wow! You've already\n\
 recovered that many\n\
-Stars? Way to go, Mario!\n\
+Stars? Way to go, Gobble!\n\
 I'll bet you'll have us out\n\
 of here in no time!\n\
 \n\
@@ -1676,7 +1655,7 @@ Pound the Ground as you\n\
 land."))
 
 DEFINE_DIALOG(DIALOG_137, 1, 6, 30, 200, _("\
-Thanks, Mario! The castle\n\
+Thanks, Gobble! The castle\n\
 is recovering its energy\n\
 as you retrieve Power\n\
 Stars, and you've chased\n\
@@ -1723,7 +1702,7 @@ Fortress on Floor 1.\n\
 Bowser's troops are still\n\
 gaining power, so you\n\
 can't give up. Save us,\n\
-Mario! Keep searching for\n\
+Gobble! Keep searching for\n\
 Stars!"))
 
 DEFINE_DIALOG(DIALOG_142, 1, 5, 150, 200, _("\
@@ -1896,7 +1875,7 @@ course where you lost it.\n\
 Speaking of lost, the\n\
 Princess is still stuck in\n\
 the walls somewhere.\n\
-Please help, Mario!\n\
+Please help, Gobble!\n\
 \n\
 Oh, you know that there\n\
 are secret worlds in the\n\
@@ -1907,7 +1886,7 @@ DEFINE_DIALOG(DIALOG_155, 1, 6, 30, 200, _("\
 Thanks to the power of\n\
 the Stars, life is\n\
 returning to the castle.\n\
-Please, Mario, you have\n\
+Please, Gobble, you have\n\
 to give Bowser the boot!\n\
 \n\
 Here, let me tell you a\n\
@@ -1981,7 +1960,7 @@ Enjoy!!!"
 #endif
 
 DEFINE_DIALOG(DIALOG_161, 1, 4, 30, 200, _("\
-Mario!!!\n\
+Gobble!!!\n\
 It that really you???\n\
 It has been so long since\n\
 our last adventure!\n\
@@ -1998,12 +1977,12 @@ I knew you could do it!\n\
 Now I have a very special\n\
 message for you.\n\
 『Thanks for playing Super\n\
-Mario 64! This is the\n\
+Gobble 64! This is the\n\
 end of the game, but not\n\
 the end of the fun." \
 KEEP_ON_PLAYING "』\n\
 \n\
-The Super Mario 64 Team"))
+The Super Gobble 64 Team"))
 
 DEFINE_DIALOG(DIALOG_162, 1, 4, 30, 200, _("\
 No, no, no! Not you\n\
@@ -2022,7 +2001,7 @@ Owww! Let me go!"))
 DEFINE_DIALOG(DIALOG_163, 1, 5, 30, 200, _("\
 Noooo! You've really\n\
 beaten me this time,\n\
-Mario! I can't stand\n\
+Gobble! I can't stand\n\
 losing to you!\n\
 \n\
 My troops...worthless!\n\
@@ -2047,7 +2026,7 @@ smokin'!\n\
 Buwaa ha ha!"))
 
 DEFINE_DIALOG(DIALOG_164, 1, 4, 30, 200, _("\
-Mario! What's up, pal?\n\
+Gobble! What's up, pal?\n\
 I haven't been on the\n\
 slide lately, so I'm out\n\
 of shape.\n\

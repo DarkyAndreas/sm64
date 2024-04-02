@@ -487,9 +487,9 @@ s32 perform_air_quarter_step(struct MarioState *m, Vec3f intendedPos, u32 stepAr
         m->wall = upperWall != NULL ? upperWall : lowerWall;
         wallDYaw = atan2s(m->wall->normal.z, m->wall->normal.x) - m->faceAngle[1];
 
-        if (m->wall->type == SURFACE_BURNING) {
+        /*if (m->wall->type == SURFACE_BURNING) {
             return AIR_STEP_HIT_LAVA_WALL;
-        }
+        }*/
 
         if (wallDYaw < -0x6000 || wallDYaw > 0x6000) {
             m->flags |= MARIO_UNKNOWN_30;

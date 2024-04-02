@@ -40,6 +40,10 @@ FORCE_BSS s16 gCutsceneMsgXOffset;
 FORCE_BSS s16 gCutsceneMsgYOffset;
 s8 gRedCoinsCollected;
 
+s8 gInvertXAxis = 1;
+s8 gParallelLakitu = 1;
+u8 letgo = FALSE;
+
 extern u8 gLastCompletedCourseNum;
 extern u8 gLastCompletedStarNum;
 
@@ -2628,7 +2632,8 @@ void render_pause_my_score_coins(void) {
     #define Y_VAL7 2
 #endif
 
-void render_pause_camera_options(s16 x, s16 y, s8 *index, s16 xIndex) {
+/*void render_pause_camera_options(s16 x, s16 y, s8 *index) {
+	u8 xIndex;
     UNUSED_CN u8 textLakituMario[] = { TEXT_LAKITU_MARIO };
     UNUSED_CN u8 textLakituStop[] = { TEXT_LAKITU_STOP };
 #ifdef VERSION_EU
@@ -2643,30 +2648,41 @@ void render_pause_camera_options(s16 x, s16 y, s8 *index, s16 xIndex) {
         { TEXT_NORMAL_FIXED_DE },
     };
 #else
-    u8 textNormalUpClose[] = { TEXT_NORMAL_UPCLOSE };
-    u8 textNormalFixed[] = { TEXT_NORMAL_FIXED };
+    //u8 textNormalUpClose[] = { TEXT_NORMAL_UPCLOSE };
+    //u8 textNormalFixed[] = { TEXT_NORMAL_FIXED };
 #endif
-
-    handle_menu_scrolling(MENU_SCROLL_HORIZONTAL, index, 1, 2);
-
+	if (gPlayer3Controller->rawStickX < 60 && gPlayer3Controller->rawStickX > -60) {
+		xIndex = 0;
+	}
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
+
 
 #ifdef VERSION_CN
     print_generic_string(x + 14, y + 2, textNormalUpClose);
     print_generic_string(x + 124, y + 2, textNormalFixed);
 #else
-    print_generic_string(x + 14, y + 2, textLakituMario);
-    print_generic_string(x + TXT1_X, y - 13, LANGUAGE_ARRAY(textNormalUpClose));
-    print_generic_string(x + 124, y + 2, textLakituStop);
-    print_generic_string(x + TXT2_X, y - 13, LANGUAGE_ARRAY(textNormalFixed));
+	if (cam_select_alt_mode(0) == CAM_SELECTION_MARIO) {
+    print_generic_string(x + 14, y, textLakituMario);
+    //print_generic_string(x + TXT1_X, y - 13, LANGUAGE_ARRAY(textNormalUpClose));
+    } else {
+    print_generic_string(x + 14, y, textLakituStop);
+    //print_generic_string(x + TXT2_X, y - 13, LANGUAGE_ARRAY(textNormalFixed));
+    }
 #endif
+		
+		gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
+		create_dl_translation_matrix(MENU_MTX_PUSH, x, y + Y_VAL7, 0);
+		if (cam_select_alt_mode(0) != CAM_SELECTION_MARIO && gPlayer3Controller->rawStickX > 60) {
+            gDialogCameraAngleIndex = CAM_SELECTION_MARIO;
+		}
 
-    gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
-    create_dl_translation_matrix(MENU_MTX_PUSH, x + ((*index - 1) * xIndex), y + Y_VAL7, 0);
-    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
-    gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
-    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+		if (cam_select_alt_mode(0) == CAM_SELECTION_MARIO && gPlayer3Controller->rawStickX < -60) {
+            gDialogCameraAngleIndex = CAM_SELECTION_FIXED;
+		}
+		gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
+		gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+		gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 
     switch (*index) {
         case CAM_SELECTION_MARIO:
@@ -2676,7 +2692,7 @@ void render_pause_camera_options(s16 x, s16 y, s8 *index, s16 xIndex) {
             cam_select_alt_mode(CAM_SELECTION_FIXED);
             break;
     }
-}
+}*/
 
 #if defined(VERSION_JP) || defined(VERSION_SH)
     #define X_VAL8 0
@@ -2688,12 +2704,57 @@ void render_pause_camera_options(s16 x, s16 y, s8 *index, s16 xIndex) {
     #define Y_VAL8 2
     #define Y_OFFSET1 17
     #define Y_OFFSET2 33
+	#define Y_OFFSET3 49
+	#define Y_OFFSET4 65
 #elif defined(VERSION_CN)
     #define X_VAL8 4
     #define Y_VAL8 2
     #define Y_OFFSET1 20
     #define Y_OFFSET2 38
 #endif
+
+void new_handle_menu_scrolling(s8 scrollDirection, s8 *currentIndex, s8 minIndex, s8 maxIndex) {
+    u8 index = 0;
+
+    if (scrollDirection == MENU_SCROLL_VERTICAL) {
+        if (gPlayer1Controller->rawStickY > 60 && letgo == FALSE) {
+            index++;
+        }
+
+        if (gPlayer1Controller->rawStickY < -60 && letgo == FALSE) {
+            index += 2;
+        }
+    } else if (scrollDirection == MENU_SCROLL_HORIZONTAL) {
+        if (gPlayer1Controller->rawStickX > 60 && letgo == FALSE) {
+            index += 2;
+        }
+
+        if (gPlayer1Controller->rawStickX < -60 && letgo == FALSE) {
+            index++;
+        }
+    }
+
+    if (index == 2) {
+        if (*currentIndex == maxIndex) {
+            *currentIndex = minIndex;
+        } else {
+            (*currentIndex)++;
+        }
+		play_sound(SOUND_MENU_CHANGE_SELECT, gGlobalSoundSource);
+		letgo = TRUE;
+    }
+
+    if (index == 1) {
+        if (*currentIndex == minIndex) {
+            *currentIndex = maxIndex;
+        } else {
+            (*currentIndex)--;
+        }
+		play_sound(SOUND_MENU_CHANGE_SELECT, gGlobalSoundSource);
+		letgo = TRUE;
+    }
+}
+
 
 void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
 #ifdef VERSION_EU
@@ -2715,30 +2776,65 @@ void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
 #else
     u8 textContinue[] = { TEXT_CONTINUE };
     u8 textExitCourse[] = { TEXT_EXIT_COURSE };
-    u8 textCameraAngleR[] = { TEXT_CAMERA_ANGLE_R };
+	u8 textLakituMario[] = { TEXT_LAKITU_MARIO };
+	u8 textLakituStop[] = { TEXT_LAKITU_STOP };
+	u8 textCameraNonInverted[] = { TEXT_CAMERA_NONINVERTED };
+	u8 textCameraInverted[] = { TEXT_CAMERA_INVERTED };
+	u8 textParallelLakituOn[] = { PARALLEL_LAKITU_ON };
+	u8 textParallelLakituOff[] = { PARALLEL_LAKITU_OFF };
 #endif
-
-    handle_menu_scrolling(MENU_SCROLL_VERTICAL, index, 1, 3);
-
+	if (gPlayer1Controller->rawStickX > -60 && gPlayer1Controller->rawStickX < 60) {
+		letgo = FALSE;
+    }
+	
+    handle_menu_scrolling(MENU_SCROLL_VERTICAL, index, 1, 5);
+	create_dl_translation_matrix(MENU_MTX_PUSH, x - X_VAL8, (y - ((*index - 1) * yIndex)) - Y_VAL8, 0);
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
+    gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
 
     print_generic_string(x + 10, y - 2, LANGUAGE_ARRAY(textContinue));
     print_generic_string(x + 10, y - Y_OFFSET1, LANGUAGE_ARRAY(textExitCourse));
-
-    if (*index != MENU_OPT_CAMERA_ANGLE_R) {
-        print_generic_string(x + 10, y - Y_OFFSET2, LANGUAGE_ARRAY(textCameraAngleR));
-        gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
-
-        create_dl_translation_matrix(MENU_MTX_PUSH, x - X_VAL8, (y - ((*index - 1) * yIndex)) - Y_VAL8, 0);
-
-        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
-        gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
-        gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+    
+	if (*index == 3) {
+		new_handle_menu_scrolling(MENU_SCROLL_HORIZONTAL, &gDialogCameraAngleIndex, 1, 2);
+	}
+	if (*index == 4) {
+		new_handle_menu_scrolling(MENU_SCROLL_HORIZONTAL, &gInvertXAxis, 1, 2);
+	}
+	if (*index == 5) {
+		new_handle_menu_scrolling(MENU_SCROLL_HORIZONTAL, &gParallelLakitu, 1, 2);
+	}
+	
+	switch (gDialogCameraAngleIndex) {
+        case CAM_SELECTION_MARIO:
+            cam_select_alt_mode(CAM_SELECTION_MARIO);
+			print_generic_string(x + 10, y - Y_OFFSET2, textLakituMario);
+            break;
+        case CAM_SELECTION_FIXED:
+            cam_select_alt_mode(CAM_SELECTION_FIXED);
+			print_generic_string(x + 10, y - Y_OFFSET2, textLakituStop);
+            break;
     }
-
-    if (*index == MENU_OPT_CAMERA_ANGLE_R) {
-        render_pause_camera_options(x - 42, y - 42, &gDialogCameraAngleIndex, 110);
+	
+	switch (gInvertXAxis) {
+        case 1:
+			print_generic_string(x + 10, y - Y_OFFSET3, textCameraNonInverted);
+            break;
+        case 2:
+			print_generic_string(x + 10, y - Y_OFFSET3, textCameraInverted);
+            break;
+    }
+	
+	switch (gParallelLakitu) {
+        case 1:
+			print_generic_string(x + 10, y - Y_OFFSET4, textParallelLakituOn);
+            break;
+        case 2:
+			print_generic_string(x + 10, y - Y_OFFSET4, textParallelLakituOff);
+            break;
     }
 }
 
@@ -2994,10 +3090,7 @@ s16 render_pause_screen(void) {
             shade_screen();
             render_pause_my_score_coins();
             render_pause_red_coins();
-
-            if (gMarioStates[0].action & ACT_FLAG_PAUSE_EXIT) {
-                render_pause_course_options(99, 93, &gMenuLineNum, 15);
-            }
+			render_pause_course_options(99, 93, &gMenuLineNum, 15);
 
 #ifdef VERSION_EU
             if (gPlayer3Controller->buttonPressed & (A_BUTTON | START_BUTTON | Z_TRIG))

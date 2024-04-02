@@ -58,7 +58,7 @@ u32 interact_igloo_barrier(struct MarioState *, u32, struct Object *);
 u32 interact_tornado(struct MarioState *, u32, struct Object *);
 u32 interact_whirlpool(struct MarioState *, u32, struct Object *);
 u32 interact_strong_wind(struct MarioState *, u32, struct Object *);
-u32 interact_flame(struct MarioState *, u32, struct Object *);
+//u32 interact_flame(struct MarioState *, u32, struct Object *);
 u32 interact_snufit_bullet(struct MarioState *, u32, struct Object *);
 u32 interact_clam_or_bubba(struct MarioState *, u32, struct Object *);
 u32 interact_bully(struct MarioState *, u32, struct Object *);
@@ -94,7 +94,7 @@ static struct InteractionHandler sInteractionHandlers[] = {
     { INTERACT_TORNADO,        interact_tornado },
     { INTERACT_WHIRLPOOL,      interact_whirlpool },
     { INTERACT_STRONG_WIND,    interact_strong_wind },
-    { INTERACT_FLAME,          interact_flame },
+    //{ INTERACT_FLAME,          interact_flame },
     { INTERACT_SNUFIT_BULLET,  interact_snufit_bullet },
     { INTERACT_CLAM_OR_BUBBA,  interact_clam_or_bubba },
     { INTERACT_BULLY,          interact_bully },
@@ -1155,7 +1155,7 @@ u32 interact_strong_wind(struct MarioState *m, UNUSED u32 interactType, struct O
     return FALSE;
 }
 
-u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
+/*u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
     u32 burningAction = ACT_BURNING_JUMP;
 
     if (!sInvulnerable && !(m->flags & MARIO_METAL_CAP) && !(m->flags & MARIO_VANISH_CAP)
@@ -1183,7 +1183,7 @@ u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object 
     }
 
     return FALSE;
-}
+}*/
 
 u32 interact_snufit_bullet(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
     if (!sInvulnerable && !(m->flags & MARIO_VANISH_CAP)) {
@@ -1882,7 +1882,7 @@ void mario_handle_special_floors(struct MarioState *m) {
                 break;
         }
 
-        if (!(m->action & ACT_FLAG_AIR) && !(m->action & ACT_FLAG_SWIMMING)) {
+        if (!(m->action & ACT_FLAG_AIR) && !(m->action & ACT_FLAG_SWIMMING) && (gCurrCourseNum == 10)) {
             switch (floorType) {
                 case SURFACE_BURNING:
                     check_lava_boost(m);
