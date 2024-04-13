@@ -20,6 +20,31 @@
 #include "segment_symbols.h"
 #include "rumble_init.h"
 
+extern u8 gInvertXAxis;
+
+    s8 swapBits(s8 Player1, s8 Player3, u8 n1, u8 n2)
+{
+    u8 bit1;
+    u8 bit2;
+    u8 XOR;
+    /* Move p1'th to rightmost side */
+    bit1 =  (Player1 >> n1) & 1;
+ 
+    /* Move p2'th to rightmost side */
+    bit2 =  (Player1 >> n2) & 1;
+ 
+    /* XOR the two bits */
+    XOR = (bit1 ^ bit2);
+ 
+    /* Put the xor bit back to their original positions */
+    XOR = (XOR << n1) | (XOR << n2);
+ 
+    /* XOR 'x' with the original number so that the
+       two sets are swapped */
+    //gPlayer3Controller->buttonDown = Player1 ^ XOR;
+    return Player3 = Player1 ^ XOR;
+}
+
 // First 3 controller slots
 struct Controller gControllers[3];
 
@@ -563,8 +588,13 @@ void read_controller_inputs(void) {
     gPlayer3Controller->stickX = gPlayer1Controller->stickX;
     gPlayer3Controller->stickY = gPlayer1Controller->stickY;
     gPlayer3Controller->stickMag = gPlayer1Controller->stickMag;
-    gPlayer3Controller->buttonPressed = gPlayer1Controller->buttonPressed;
-    gPlayer3Controller->buttonDown = gPlayer1Controller->buttonDown;
+    if (gInvertXAxis == 2) {
+        swapBits(gPlayer1Controller->buttonPressed, gPlayer3Controller->buttonPressed, gPlayer1Controller->buttonPressed & R_CBUTTONS, gPlayer1Controller->buttonPressed & L_CBUTTONS);
+        swapBits(gPlayer1Controller->buttonDown, gPlayer3Controller->buttonDown, gPlayer1Controller->buttonDown & R_CBUTTONS, gPlayer1Controller->buttonDown & L_CBUTTONS);
+    } else {
+        gPlayer3Controller->buttonPressed = gPlayer1Controller->buttonPressed;
+        gPlayer3Controller->buttonDown = gPlayer1Controller->buttonDown;
+    }
 }
 
 /**

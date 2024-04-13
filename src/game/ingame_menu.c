@@ -47,6 +47,45 @@ u8 letgo = FALSE;
 extern u8 gLastCompletedCourseNum;
 extern u8 gLastCompletedStarNum;
 
+u8 setCourseStars[] = /*Course 1*/ {7} ;
+
+void new_render_pause_course_stars(s16 x, s16 y, s16 fileIndex, s16 courseIndex) {
+    
+    s16 hasStar = 0;
+
+    u8 str[30];
+    u8 str_sta[4];
+
+    u8 starFlags = save_file_get_star_flags(fileIndex, courseIndex);
+    u16 starCount = save_file_get_course_star_count(fileIndex, courseIndex);
+
+    u16 nextStar = 0;
+
+    /*while (hasStar != starFlagging) {
+        if (starFlags & (1 << nextStar)) {
+
+            str[nextStar * 2] = DIALOG_CHAR_STAR_FILLED;
+            hasStar++;
+        } else {
+            str[nextStar * 2] = DIALOG_CHAR_STAR_OPEN;
+        }
+
+        str[nextStar * 2 + 1] = DIALOG_CHAR_SPACE;
+        nextStar++;
+    }
+
+    if (starCount == nextStar && starCount != 6) {
+        str[nextStar * 2] = DIALOG_CHAR_STAR_OPEN;
+        str[nextStar * 2 + 1] = DIALOG_CHAR_SPACE;
+        nextStar++;
+    }*/
+
+    str[nextStar * 2] = DIALOG_CHAR_TERMINATOR;
+    //print_generic_string(x + 14, y + 13, str);
+    int_to_str(courseIndex, str_sta);
+    print_generic_string(x + 14, y + 13, str_sta);
+}
+
 enum MenuState {
     MENU_STATE_0,
     MENU_STATE_1,
@@ -2632,68 +2671,6 @@ void render_pause_my_score_coins(void) {
     #define Y_VAL7 2
 #endif
 
-/*void render_pause_camera_options(s16 x, s16 y, s8 *index) {
-	u8 xIndex;
-    UNUSED_CN u8 textLakituMario[] = { TEXT_LAKITU_MARIO };
-    UNUSED_CN u8 textLakituStop[] = { TEXT_LAKITU_STOP };
-#ifdef VERSION_EU
-    u8 textNormalUpClose[][20] = {
-        { TEXT_NORMAL_UPCLOSE },
-        { TEXT_NORMAL_UPCLOSE_FR },
-        { TEXT_NORMAL_UPCLOSE_DE }
-    };
-    u8 textNormalFixed[][17] = {
-        { TEXT_NORMAL_FIXED },
-        { TEXT_NORMAL_FIXED_FR },
-        { TEXT_NORMAL_FIXED_DE },
-    };
-#else
-    //u8 textNormalUpClose[] = { TEXT_NORMAL_UPCLOSE };
-    //u8 textNormalFixed[] = { TEXT_NORMAL_FIXED };
-#endif
-	if (gPlayer3Controller->rawStickX < 60 && gPlayer3Controller->rawStickX > -60) {
-		xIndex = 0;
-	}
-    gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
-    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
-
-
-#ifdef VERSION_CN
-    print_generic_string(x + 14, y + 2, textNormalUpClose);
-    print_generic_string(x + 124, y + 2, textNormalFixed);
-#else
-	if (cam_select_alt_mode(0) == CAM_SELECTION_MARIO) {
-    print_generic_string(x + 14, y, textLakituMario);
-    //print_generic_string(x + TXT1_X, y - 13, LANGUAGE_ARRAY(textNormalUpClose));
-    } else {
-    print_generic_string(x + 14, y, textLakituStop);
-    //print_generic_string(x + TXT2_X, y - 13, LANGUAGE_ARRAY(textNormalFixed));
-    }
-#endif
-		
-		gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
-		create_dl_translation_matrix(MENU_MTX_PUSH, x, y + Y_VAL7, 0);
-		if (cam_select_alt_mode(0) != CAM_SELECTION_MARIO && gPlayer3Controller->rawStickX > 60) {
-            gDialogCameraAngleIndex = CAM_SELECTION_MARIO;
-		}
-
-		if (cam_select_alt_mode(0) == CAM_SELECTION_MARIO && gPlayer3Controller->rawStickX < -60) {
-            gDialogCameraAngleIndex = CAM_SELECTION_FIXED;
-		}
-		gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
-		gSPDisplayList(gDisplayListHead++, dl_draw_triangle);
-		gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
-
-    switch (*index) {
-        case CAM_SELECTION_MARIO:
-            cam_select_alt_mode(CAM_SELECTION_MARIO);
-            break;
-        case CAM_SELECTION_FIXED:
-            cam_select_alt_mode(CAM_SELECTION_FIXED);
-            break;
-    }
-}*/
-
 #if defined(VERSION_JP) || defined(VERSION_SH)
     #define X_VAL8 0
     #define Y_VAL8 4
@@ -2717,19 +2694,19 @@ void new_handle_menu_scrolling(s8 scrollDirection, s8 *currentIndex, s8 minIndex
     u8 index = 0;
 
     if (scrollDirection == MENU_SCROLL_VERTICAL) {
-        if (gPlayer1Controller->rawStickY > 60 && letgo == FALSE) {
+        if (gPlayer3Controller->rawStickY > 60 && letgo == FALSE) {
             index++;
         }
 
-        if (gPlayer1Controller->rawStickY < -60 && letgo == FALSE) {
+        if (gPlayer3Controller->rawStickY < -60 && letgo == FALSE) {
             index += 2;
         }
     } else if (scrollDirection == MENU_SCROLL_HORIZONTAL) {
-        if (gPlayer1Controller->rawStickX > 60 && letgo == FALSE) {
+        if (gPlayer3Controller->rawStickX > 60 && letgo == FALSE) {
             index += 2;
         }
 
-        if (gPlayer1Controller->rawStickX < -60 && letgo == FALSE) {
+        if (gPlayer3Controller->rawStickX < -60 && letgo == FALSE) {
             index++;
         }
     }
@@ -2768,11 +2745,6 @@ void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
         { TEXT_EXIT_COURSE_FR },
         { TEXT_EXIT_COURSE_DE }
     };
-    u8 textCameraAngleR[][24] = {
-        { TEXT_CAMERA_ANGLE_R },
-        { TEXT_CAMERA_ANGLE_R_FR },
-        { TEXT_CAMERA_ANGLE_R_DE }
-    };
 #else
     u8 textContinue[] = { TEXT_CONTINUE };
     u8 textExitCourse[] = { TEXT_EXIT_COURSE };
@@ -2783,7 +2755,7 @@ void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
 	u8 textParallelLakituOn[] = { PARALLEL_LAKITU_ON };
 	u8 textParallelLakituOff[] = { PARALLEL_LAKITU_OFF };
 #endif
-	if (gPlayer1Controller->rawStickX > -60 && gPlayer1Controller->rawStickX < 60) {
+	if (gPlayer3Controller->rawStickX > -60 && gPlayer3Controller->rawStickX < 60) {
 		letgo = FALSE;
     }
 	
@@ -2794,6 +2766,7 @@ void render_pause_course_options(s16 x, s16 y, s8 *index, s16 yIndex) {
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gMenuTextAlpha);
+    new_render_pause_course_stars(104, y + Y_OFFSET1, gCurrSaveFileNum - 1, COURSE_NUM_TO_INDEX(gCurrCourseNum));
 
     print_generic_string(x + 10, y - 2, LANGUAGE_ARRAY(textContinue));
     print_generic_string(x + 10, y - Y_OFFSET1, LANGUAGE_ARRAY(textExitCourse));
@@ -3088,7 +3061,6 @@ s16 render_pause_screen(void) {
 
         case MENU_STATE_PAUSE_SCREEN_COURSE:
             shade_screen();
-            render_pause_my_score_coins();
             render_pause_red_coins();
 			render_pause_course_options(99, 93, &gMenuLineNum, 15);
 
